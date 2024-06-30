@@ -1,0 +1,12 @@
+---
+inventory:
+    plugin: SimpleInventory
+    options:
+        host_file: "/home/expert/workspace/projects/CloudTunnelVis/nornir_data/hosts.yaml"
+        group_file: "/home/expert/workspace/projects/CloudTunnelVis/nornir_data/groups.yaml"
+        defaults_file: "/home/expert/workspace/projects/CloudTunnelVis/nornir_data/defaults.yaml"
+
+runner:
+    plugin: threaded
+    options:
+        num_workers: 100

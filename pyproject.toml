@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "cloudtunnelvis"
+version = "0.1.0"
+description = ""
+authors = ["sshukla90 <sshukla90@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+nornir = "^3.4.1"
+nornir-scrapli = "^2024.1.30"
+nornir-utils = "^0.2.0"
+nornir-netmiko = "^1.0.1"
+pyyaml = "^6.0.1"
+rich = "^13.7.1"
+setuptools = "^70.1.1"
+ipython = "^8.26.0"
+nornir-napalm = "^0.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

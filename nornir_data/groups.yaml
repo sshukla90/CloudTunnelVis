@@ -1,0 +1,11 @@
+
+---
+cisco_ios_xe:
+  platform: ios
+  connection_options:
+    napalm:
+      extras:
+        optional_args:
+          timeout: 60
+
+

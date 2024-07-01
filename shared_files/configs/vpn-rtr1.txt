@@ -1,0 +1,67 @@
+!
+! base config
+enable
+configure terminal
+no service timestamps debug uptime
+no service timestamps log uptime
+!
+hostname vpn-rtr1
+!
+no ip domain lookup
+ip routing
+ipv6 unicast-routing
+!
+cdp run
+!
+interface Loopback0
+ ip address 150.1.1.1 255.255.255.255
+!
+interface GigabitEthernet0/1
+ cdp enable
+ no shutdown
+!
+interface GigabitEthernet0/1.12
+ encapsulation dot1Q 12
+ ip address 155.1.12.1 255.255.255.0
+!
+interface GigabitEthernet0/1.13
+ description edge1-to-azure
+ encapsulation dot1Q 13
+ ip address 155.1.13.1 255.255.255.0
+!
+!
+interface GigabitEthernet0/1.100
+ encapsulation dot1Q 100
+ ip address 169.254.100.1 255.255.255.0
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+line vty 0 4
+ privilege level 15
+ no login
+!
+ip domain-name example.com
+!
+username admin priv 15 password C1sco12345
+!
+ip ssh version 2
+!
+crypto key generate rsa mod 1024
+!
+line vty 0 4
+ transport input all 
+ login local
+!
+vrf definition MGMT
+ address-family ipv4
+ exit-address-family
+!
+int g0/0
+ vrf forwarding MGMT
+ ip add 192.168.106.111 255.255.255.0
+ no shutdown
+!

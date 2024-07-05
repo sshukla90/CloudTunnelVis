@@ -1354,6 +1354,16 @@ files = [
 ]
 
 [[package]]
+name = "ssh2"
+version = "1.03"
+description = "Simplifying EC2 ssh'ing"
+optional = false
+python-versions = "*"
+files = [
+    {file = "ssh2-1.03.tar.gz", hash = "sha256:090b92934b033fa0f045d1ed2c449cd9935a39e301ae6207e7c4e5d02c67bf32"},
+]
+
+[[package]]
 name = "stack-data"
 version = "0.6.3"
 description = "Extract data from python stack frames and tracebacks for informative displays"
@@ -1508,4 +1518,4 @@ pyyaml = "*"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "5c1bfb2c56271fa28315adc7a6b03de4c007cad6ab76333e36d30a69bdd2009b"
+content-hash = "90d10f0964122dd39aed46e46219f158c5024c65cf15809477224b5f9f7da8c9"

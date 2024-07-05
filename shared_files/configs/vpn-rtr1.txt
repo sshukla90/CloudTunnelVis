@@ -65,3 +65,63 @@ int g0/0
  ip add 192.168.106.111 255.255.255.0
  no shutdown
 !
+! Create second GRE Tunnel to vpn-rtr2
+interface Tunnel2
+ ip address 10.2.1.1 255.255.255.252
+ tunnel source GigabitEthernet0/1.12
+ tunnel destination 155.1.12.2
+ tunnel mode gre ip
+exit
+
+! Create second GRE Tunnel to vpn-rtr3
+interface Tunnel3
+ ip address 10.2.2.1 255.255.255.252
+ tunnel source GigabitEthernet0/1.13
+ tunnel destination 155.1.13.3
+ tunnel mode gre ip
+exit
+
+! Update Crypto Map for vpn-rtr2
+crypto map MYMAP 30 ipsec-isakmp
+ set peer 155.1.12.2
+ set transform-set MYTRANSFORMSET
+ match address 103
+
+! Update Crypto Map for vpn-rtr3
+crypto map MYMAP 40 ipsec-isakmp
+ set peer 155.1.13.3
+ set transform-set MYTRANSFORMSET
+ match address 104
+
+! Access Lists for new GRE Traffic
+access-list 103 permit gre host 155.1.12.1 host 155.1.12.2
+access-list 104 permit gre host 155.1.13.1 host 155.1.13.3
+
+! Apply Updated Crypto Map to Interfaces
+interface GigabitEthernet0/1.12
+ crypto map MYMAP
+exit
+
+interface GigabitEthernet0/1.13
+ crypto map MYMAP
+exit
+! BGP for vpn-rtr1 (AS 65001)
+router bgp 65001
+ bgp log-neighbor-changes
+
+ ! Neighbor Configuration for vpn-rtr2
+ neighbor 10.1.1.2 remote-as 65002
+ neighbor 10.2.1.2 remote-as 65002
+
+ ! Neighbor Configuration for vpn-rtr3
+ neighbor 10.1.2.2 remote-as 65003
+ neighbor 10.2.2.2 remote-as 65003
+
+ ! Advertise GRE Networks and Loopback
+ network 10.1.1.0 mask 255.255.255.252
+ network 10.1.2.0 mask 255.255.255.252
+ network 10.2.1.0 mask 255.255.255.252
+ network 10.2.2.0 mask 255.255.255.252
+ network 150.1.1.0 mask 255.255.255.255
+
+end
